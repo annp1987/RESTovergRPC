@@ -50,7 +50,6 @@ func (d *Directory) SearchEntry(ctx Context, req*SearchEntryRequest) (*SearchEnt
 	return resp, nil
 }
 
-
 // Cleanup
 func (d *Directory) Close() error {
 	return  d.backend.Close()

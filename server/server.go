@@ -22,6 +22,7 @@ func startGRPC(ctx context.Context, dbUrl map[string]string) {
 	// register service
 	grpcServer := grpc.NewServer()
 	ds, err := NewDirectoryServer(dbUrl)
+	defer ds.Close()
 	if err != nil {
 		log.Fatalf("couldn't connect to backend: %v", err)
 	}
