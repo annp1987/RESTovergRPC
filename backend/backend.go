@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package storage
+package backend
 
 import (
 	api "github.com/annp1987/RESTovergRPC/directory"
@@ -30,7 +30,7 @@ type Backend interface {
 	Open(conf *Config) error
 
 	// CreateDirectory
-	CreateDirectory(req *api.DirectoryRequest) (string, error)
+	CreateDirectory(name string) (string, error)
 
 	// AddEntry and return string "ok" or "fail"
 	AddEntry(e *api.EntryRequest) (string, error)
@@ -38,6 +38,6 @@ type Backend interface {
 	// SearchEntry
 	SearchEntry(query string, limit uint) ([]*api.Entry, error)
 
-	// Close handles any necessary cleanup.
+	// Close handles any necessary cleanup
 	Close() error
 }
