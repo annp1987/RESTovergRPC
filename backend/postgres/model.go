@@ -6,7 +6,7 @@ import (
 
 type Directory struct {
 	gorm.Model
-	DirectoryName string
+	DirectoryName string `gorm:"not null;unique"`
 	Entries []Entry `gorm:"foreignkey:DirectoryRefer"`
 }
 
