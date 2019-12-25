@@ -16,6 +16,7 @@ package backend
 
 import (
 	"errors"
+	storage "github.com/annp1987/RESTovergRPC/postgres"
 	api "github.com/annp1987/RESTovergRPC/directory"
 )
 
@@ -42,6 +43,8 @@ type Backend interface {
 // Config backend include Type and db url
 func get_backend(dbUrl map[string]string) (Backend, error) {
 	switch dbUrl["Type"] {
+	case "postgres":
+		return storage.New(dbUrl), nil
 	default:
 		return nil, InvalidDBType
 		}

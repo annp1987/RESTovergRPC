@@ -2,20 +2,17 @@ package postgres
 
 import (
 	"github.com/jinzhu/gorm"
-
-	// postgres driver
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type Directory struct {
 	gorm.Model
-	DirectoryName string
+	DirectoryName string `json:"directory_name"`
 }
 
 type Entry struct {
 	gorm.Model
 	DirectoryID uint
-	Name string
-	LastName string
-	PhNumber string
+	Name string	`json:"name"`
+	LastName string `json:"last_name"`
+	PhNumber string `json:"ph_number"`
 }
