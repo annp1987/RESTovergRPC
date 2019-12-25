@@ -17,17 +17,14 @@ ifndef BINDATA_INSTALLED
 endif
 ifndef PGGG_INSTALLED
 	go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-	go get go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 endif
 ifndef PGG_INSTALLED
 	go get -u github.com/golang/protobuf/protoc-gen-go
 endif
 
-proto: install-tools
-    protoc \
-	-I/us/local/include \
-	-I. \
-	-I$(GRPC_GATEWAY_DIR)/third_party/googleapis \
-	--go_out=plugins=grpc:directory \
-	--grpc-gateway_out=logtostderr=true:directory \
-	--proto_path proto directory.proto
+gen-proto:
+	protoc -I. \
+    	   -I$(GRPC_GATEWAY_DIR)/third_party/googleapis \
+    	   --go_out=plugins=grpc:proto \
+    	   --grpc-gateway_out=logtostderr=true:proto \
+    	   --proto_path proto directory.proto
