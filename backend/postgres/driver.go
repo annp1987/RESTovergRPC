@@ -25,20 +25,25 @@ func New(dburl map[string]string) (backend.Backend, error) {
 }
 
 // CreateDirectory
-func (b *storer) CreateDirectory(name string) (string, error) {
+func (s *storer) CreateDirectory(name string) (string, error) {
+	s.db.Create(&Directory{DirectoryName: name})
+	return "OK", nil
 }
 
 // AddEntry and return string "ok" or "fail"
-func (b *storer) AddEntry(e *api.EntryRequest) (string, error) {
-
+func (s *storer) AddEntry(e *api.EntryRequest) (string, error) {
+	s.db.Create(&Entry{DirectoryRefer: e.DirectoryName, Name: e.Name, LastName: e.LastName, PhNumber: e.PhNumber})
+	return "OK", nil
 }
 
 // SearchEntry
-func (b *storer) SearchEntry(query string, limit uint) ([]*api.Entry, error) {
-
+func (s *storer) SearchEntry(query string, limit uint) ([]*api.Entry, error) {
+	//var entries []*Entry
+	//TODO
+	return nil, nil
 }
 
 // Close handles any necessary cleanup
-func (b *storer) Close() error {
-	return b.db.Close()
+func (s *storer) Close() error {
+	return s.db.Close()
 }
