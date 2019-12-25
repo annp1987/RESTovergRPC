@@ -15,19 +15,16 @@
 package backend
 
 import (
+	"errors"
 	api "github.com/annp1987/RESTovergRPC/directory"
 )
 
-// Config Backend
-type Config struct {
-	DBUrl string
-}
+var (
+	InvalidDBType = errors.New("invalid db type")
+)
 
 // Backend stores and retrieves entities.
 type Backend interface {
-
-	// Connect to backend
-	Open(conf *Config) error
 
 	// CreateDirectory
 	CreateDirectory(name string) (string, error)
@@ -40,4 +37,12 @@ type Backend interface {
 
 	// Close handles any necessary cleanup
 	Close() error
+}
+
+// Config backend include Type and db url
+func get_backend(dbUrl map[string]string) (Backend, error) {
+	switch dbUrl["Type"] {
+	default:
+		return nil, InvalidDBType
+		}
 }

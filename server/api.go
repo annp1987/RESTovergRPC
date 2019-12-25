@@ -11,8 +11,14 @@ type Directory struct {
 	backend *backend.Backend
 }
 
-func NewDirectoryServer(backend *backend.Backend) api.DirectoryServer {
-	return &Directory{backend: backend}
+func NewDirectoryServer(dbUrl map[string]string) (api.DirectoryServer, errorr) {
+
+	db, err := backend.get_backend(dbUrl)
+
+	if err != nil {
+		return nil, err
+	}
+	return &Directory{backend: db}, err
 }
 
 // CreateDirectory create a directory to stores entries
@@ -44,10 +50,6 @@ func (d *Directory) SearchEntry(ctx Context, req*SearchEntryRequest) (*SearchEnt
 	return resp, nil
 }
 
-// Open connect to backend
-func (d *Directory) Open(conf *backend.Config) error {
-	return d.backend.Open(conf)
-}
 
 // Cleanup
 func (d *Directory) Close() error {
