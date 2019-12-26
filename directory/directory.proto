@@ -67,7 +67,6 @@ message EntryRequest {
 
 message SearchEntryRequest {
     string query = 1;
-    uint32 limit = 2;
 }
 
 message SearchEntriesResponse {

@@ -34,7 +34,7 @@ type Backend interface {
 	AddEntry(e *api.EntryRequest) (string, error)
 
 	// SearchEntry
-	SearchEntry(query string, limit uint) ([]*api.Entry, error)
+	SearchEntry(query string) ([]*api.Entry, error)
 
 	// Close handles any necessary cleanup
 	Close() error

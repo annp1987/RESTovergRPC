@@ -25,6 +25,6 @@ endif
 gen-proto:
 	protoc -I. \
     	   -I$(GRPC_GATEWAY_DIR)/third_party/googleapis \
-    	   --go_out=plugins=grpc:proto \
-    	   --grpc-gateway_out=logtostderr=true:proto \
-    	   --proto_path proto directory.proto
+    	   --go_out=plugins=grpc:directory \
+    	   --grpc-gateway_out=logtostderr=true:directory \
+    	   --proto_path directory directory.proto

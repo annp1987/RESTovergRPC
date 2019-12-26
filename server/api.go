@@ -40,7 +40,7 @@ func (d *Directory) AddEntry(ctx Context, req*api.EntryRequest) (*api.SuccessRes
 // SearchEntity finds existing entities matching a query
 func (d *Directory) SearchEntry(ctx Context, req*SearchEntryRequest) (*SearchEntriesResponse, error) {
 
-	result, err := d.backend.SearchEntry(req.Query, uint(req.Limit))
+	result, err := d.backend.SearchEntry(req.Query)
 
 	if err != nil {
 		return nil, err

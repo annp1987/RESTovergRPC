@@ -3,6 +3,7 @@ package postgres
 import (
 	"database/sql"
 	"fmt"
+	api "github.com/annp1987/RESTovergRPC/directory"
 	"github.com/annp1987/RESTovergRPC/backend"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	)
@@ -37,10 +38,11 @@ func (s *storer) AddEntry(e *api.EntryRequest) (string, error) {
 }
 
 // SearchEntry
-func (s *storer) SearchEntry(query string, limit uint) ([]*api.Entry, error) {
-	//var entries []*Entry
-	//TODO
-	return nil, nil
+func (s *storer) SearchEntry(query string) ([]*api.Entry, error) {
+	var users []*api.Entry
+	query_map := api.ExtractQuery(query)
+	s.db.Where(query_map).Find(users)
+	return users, nil
 }
 
 // Close handles any necessary cleanup
