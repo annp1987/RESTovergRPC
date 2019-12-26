@@ -1,12 +1,10 @@
 package directory
 
-import "net/url"
+import "encoding/json"
 
-// ExtractQuery extract a query string into a map {'name': 'AAA', last_name: 'BBB'}
-func ExtractQuery(query string) url.Values {
-	result, err := url.ParseQuery(query)
-	if err != nil {
-		panic(err)
-	}
+// ExtractQuery extract a query string into a map[string]interface{}
+func ExtractQuery(query string) map[string]interface{} {
+	var result map[string]interface{}
+	json.Unmarshal([]byte(query), &result)
 	return result
 }
