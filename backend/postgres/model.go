@@ -6,14 +6,14 @@ import (
 
 type Directory struct {
 	gorm.Model
-	DirectoryName string `gorm:"not null;unique"`
+	DirectoryName string `gorm:"not null;unique" json:"directory_name"`
 	Entries []Entry `gorm:"foreignkey:DirectoryRefer"`
 }
 
 type Entry struct {
 	gorm.Model
-	DirectoryRefer string
-	Name string
-	LastName string
-	PhNumber string
+	DirectoryRefer string `json:"directory_name"`
+	Name string	`json:"name"`
+	LastName string `json:"last_name"`
+	PhNumber string	`json:"ph_number"`
 }
