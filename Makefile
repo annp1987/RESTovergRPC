@@ -28,3 +28,6 @@ gen-proto:
     	   --go_out=plugins=grpc:directory \
     	   --grpc-gateway_out=logtostderr=true:directory \
     	   --proto_path directory directory.proto
+
+build:
+	go build -o ./docker/server/server main.go
