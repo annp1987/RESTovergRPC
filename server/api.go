@@ -8,12 +8,12 @@ import (
 
 // Directory implements the DirectoryServer
 type Directory struct {
-	backend *backend.Backend
+	backend backend.Backend
 }
 
-func NewDirectoryServer(dbUrl map[string]string) (api.DirectoryServer, errorr) {
+func NewDirectoryServer(dbUrl map[string]string) (*Directory, error) {
 
-	db, err := backend.get_backend(dbUrl)
+	db, err := get_backend(dbUrl)
 
 	if err != nil {
 		return nil, err
@@ -22,7 +22,7 @@ func NewDirectoryServer(dbUrl map[string]string) (api.DirectoryServer, errorr) {
 }
 
 // CreateDirectory create a directory to stores entries
-func (d *Directory) CreateDirectory(ctx Context, req*api.DirectoryRequest) (*api.SuccessResponse, error) {
+func (d *Directory) CreateDirectory(ctx context.Context, req*api.DirectoryRequest) (*api.SuccessResponse, error) {
 
 	success, err := d.backend.CreateDirectory(req.DirectoryName)
 
@@ -30,7 +30,7 @@ func (d *Directory) CreateDirectory(ctx Context, req*api.DirectoryRequest) (*api
 }
 
 // AddEntry creates a new entry
-func (d *Directory) AddEntry(ctx Context, req*api.EntryRequest) (*api.SuccessResponse, error) {
+func (d *Directory) AddEntry(ctx context.Context, req*api.EntryRequest) (*api.SuccessResponse, error) {
 
 	success, err := d.backend.AddEntry(req)
 
@@ -38,7 +38,7 @@ func (d *Directory) AddEntry(ctx Context, req*api.EntryRequest) (*api.SuccessRes
 }
 
 // SearchEntity finds existing entities matching a query
-func (d *Directory) SearchEntry(ctx Context, req*SearchEntryRequest) (*SearchEntriesResponse, error) {
+func (d *Directory) SearchEntry(ctx context.Context, req*api.SearchEntryRequest) (*api.SearchEntriesResponse, error) {
 
 	result, err := d.backend.SearchEntry(req.Query)
 

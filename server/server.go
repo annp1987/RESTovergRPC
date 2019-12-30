@@ -7,14 +7,13 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"sync"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/annp1987/RESTovergRPC/direcoty"
+	"github.com/annp1987/RESTovergRPC/directory"
 	"google.golang.org/grpc"
 )
 
-func startGRPC(ctx context.Context, dbUrl map[string]string) {
+func StartGRPC(ctx context.Context, dbUrl map[string]string) {
 	listen, err := net.Listen("tcp", "localhost:5566")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -36,7 +35,7 @@ func startGRPC(ctx context.Context, dbUrl map[string]string) {
 			// sig is a ^C, handle it
 			log.Println("shutting down gRPC server...")
 
-			server.GracefulStop()
+			grpcServer.GracefulStop()
 
 			<-ctx.Done()
 		}
@@ -47,7 +46,7 @@ func startGRPC(ctx context.Context, dbUrl map[string]string) {
 	grpcServer.Serve(listen)
 }
 
-func startHTTP() {
+func StartHTTP() {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
@@ -61,8 +60,8 @@ func startHTTP() {
 
 	// Register grpc-gateway
 	rmux := runtime.NewServeMux()
-	client := direcoty.NewDirectoryClient(conn)
-	err = direcoty.RegisterDirectoryHandlerClient(ctx, rmux, client)
+	client := directory.NewDirectoryClient(conn)
+	err = directory.RegisterDirectoryHandlerClient(ctx, rmux, client)
 	if err != nil {
 		log.Fatal(err)
 	}

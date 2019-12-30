@@ -1,28 +1,28 @@
 package postgres
 
 import (
-	"database/sql"
 	"fmt"
 	api "github.com/annp1987/RESTovergRPC/directory"
 	"github.com/annp1987/RESTovergRPC/backend"
+	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	)
 
 type storer struct {
-	db *sql.DB
+	db *gorm.DB
 }
 
-func New(dburl map[string]string) (backend.Backend, error) {
+func New(dburl map[string]string) (backend.Backend) {
 	//url would look like "host=myhost port=myport user=gorm dbname=gorm password=mypassword"
 	url := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
 		dburl["Host"], dburl["Port"], dburl["User"], dburl["Type"], dburl["Password"])
-	db, err := sql.Open("postgres", url)
+	db, err := gorm.Open("postgres", url)
 
 	if err != nil {
 		panic("failed to connect database")
 	}
 	db.AutoMigrate(&Directory{}, &Entry{})
-	return &storer{db:db}, nil
+	return &storer{db:db}
 }
 
 // CreateDirectory
@@ -33,7 +33,7 @@ func (s *storer) CreateDirectory(name string) (string, error) {
 
 // AddEntry and return string "ok" or "fail"
 func (s *storer) AddEntry(e *api.EntryRequest) (string, error) {
-	s.db.Create(&Entry{DirectoryRefer: e.DirectoryName, Name: e.Name, LastName: e.LastName, PhNumber: e.PhNumber})
+	s.db.Create(&Entry{DirectoryRefer: e.DirectoryName, Name: e.Entry.Name, LastName: e.Entry.LastName, PhNumber: e.Entry.PhNumber})
 	return "OK", nil
 }
 

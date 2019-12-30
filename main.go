@@ -23,9 +23,9 @@ func main() {
 		"Type": dbname,
 		"Password": password,
 	}
-	go server.startGRPC(ctx, dburl)
+	go server.StartGRPC(ctx, dburl)
 
-	go server.startHTTP()
+	go server.StartHTTP()
 
 	// Block forever
 	var wg sync.WaitGroup
