@@ -1,0 +1,33 @@
+version: '2.1'
+
+services:
+  db-users:
+    image: db:latest
+    networks:
+      - directory-network
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 1001:1234
+    container_name: db
+  server:
+    image: server:latest
+    ports:
+      - 8080:8080
+    container_name: server
+    environment:
+      - DB_USERS_HOST=db
+      - DB_USERS_PORT=1234
+      - DB_USERS_USER=postgres
+      - DB_USERS_NAME=postgres
+      - DB_USERS_PASSWORD=postgres
+    links:
+      - db
+    networks:
+      - directory-network
+
+networks:
+  directory-network:
+    name: directory-network

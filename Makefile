@@ -4,6 +4,11 @@ PROTOC_INSTALLED := $(shell which protoc)
 BINDATA_INSTALLED := $(shell which go-bindata 2> /dev/null)
 PGGG_INSTALLED := $(shell which protoc-gen-grpc-gateway 2> /dev/null)
 PGG_INSTALLED := $(shell which protoc-gen-go 2> /dev/null)
+SERVER_IMAGE_NAME     ?= server:latest
+SERVER_DOCKER_PATH    ?= ./docker/server/Dockerfile
+DB_IMAGE_NAME     ?= db:latest
+DB_DOCKER_PATH    ?= ./docker/postgres/Dockerfile
+
 
 install-tools:
 ifndef GO_INSTALLED
@@ -31,3 +36,7 @@ gen-proto:
 
 build:
 	go build -o ./docker/server/server main.go
+
+images:
+	docker build -t $(SERVER_IMAGE_NAME) -f $(SERVER_DOCKER_PATH)
+	docker build -t $(DB_IMAGE_NAME) -f $(DB_DOCKER_PATH)
