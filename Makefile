@@ -38,5 +38,5 @@ build:
 	go build -o ./docker/server/server main.go
 
 images:
-	docker build -t $(SERVER_IMAGE_NAME) -f $(SERVER_DOCKER_PATH)
-	docker build -t $(DB_IMAGE_NAME) -f $(DB_DOCKER_PATH)
+	docker build -t $(SERVER_IMAGE_NAME) $(SERVER_DOCKER_PATH)
+	docker build -t $(DB_IMAGE_NAME) $(DB_DOCKER_PATH)

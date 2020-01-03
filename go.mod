@@ -10,4 +10,5 @@ require (
 	google.golang.org/genproto v0.0.0-20191223191004-3caeed10a8bf
 	google.golang.org/grpc v1.24.0
 	gopkg.in/yaml.v2 v2.2.7 // indirect
+	sigs.k8s.io/kind v0.6.1 // indirect
 )
