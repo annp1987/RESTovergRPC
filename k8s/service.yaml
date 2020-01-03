@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+  labels:
+    app: server-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-test
+  template:
+    metadata:
+      labels:
+        app: server-test
+    spec:
+      containers:
+        - name: server-test
+          image: annp1987/server:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_USERS_HOST
+              value: db-users
+            - name: DB_USERS_PORT
+              value: "1234"
+            - name: DB_USERS_USER
+              value: postgres
+            - name: DB_USERS_NAME
+              value: postgres
+            - name: DB_USERS_PASSWORD
+              value: postgres
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: directory-service
+spec:
+  selector:
+    app: server-test
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 9376
